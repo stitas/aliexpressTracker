@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <title>Scraper</title>
+</head>
+<body>
+    <div class="container">
+        <h4>Title: {{data.title}}</h4>
+        {% if data.discountedPrice %}
+            <h4>Price: {{data.discountedPrice}} {{data.currency}}</h4>
+        {% else %}
+            <h4>Price: {{data.originalPrice}} {{data.currency}}</h4>
+        {% endif %}
+        <h4>Rating: {{data.rating}}/5</h4>
+        <h4>URL: <a href="{{data.url}}">{{data.url}}</a></h4>
+        <h4>Image URL: <a href="{{data.image}}_.webp">{{data.image}}.webp</a></h4>
+        <!-- <img id="product-image"> -->
+        <form action="" method="POST">
+            <input type="submit" value="Add product to tracked items" name="add_to_db" class="btn btn-primary mt-3" style="width: 50%;">
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message[1] == 'Product already exists' %}
+                    <div style="background-color: rgba(238, 55, 23, 0.5);">{{ message[1] }}</div>
+                {% else %}
+                    <div style="background-color: rgba(58, 238, 42, 0.5);">{{ message[1] }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- <script>
+        const imgElement = document.getElementById('product-image')
+        const src = '{{data.image}}';
+        const options = {
+            "headers": {
+                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                "accept-language": "lt-LT,lt;q=0.9,en-US;q=0.8,en;q=0.7,ru;q=0.6,pl;q=0.5",
+                "cache-control": "max-age=0",
+                "if-modified-since": "Tue, 25 Apr 2023 06:30:16 GMT",
+                "sec-ch-ua": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"Windows\"",
+                "sec-fetch-dest": "document",
+                "sec-fetch-mode": "navigate",
+                "sec-fetch-site": "none",
+                "sec-fetch-user": "?1",
+                "upgrade-insecure-requests": "1"
+              },
+              "referrerPolicy": "strict-origin-when-cross-origin",
+              "body": null,
+              "method": "GET",
+              "mode": "cors",
+              "credentials": "include"
+        };
+
+        fetch(src, options)
+        .then(res => res.blob())
+        .then(blob => {
+            imgElement.src = URL.createObjectURL(blob);
+        });
+    </script> -->
+</body>
+</html>

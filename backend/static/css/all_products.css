@@ -1,0 +1,11 @@
+a {
+    text-decoration: none;
+}
+
+.product-container {
+    cursor: pointer;
+}
+
+.product-container:hover {
+    background-color: rgb(211, 211, 211);
+}
